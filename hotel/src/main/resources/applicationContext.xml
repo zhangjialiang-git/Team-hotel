@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:tx="http://www.springframework.org/schema/tx" 
+	  xmlns:aop="http://www.springframework.org/schema/aop" 
+	  xmlns:context="http://www.springframework.org/schema/context" 
+	  xmlns:p="http://www.springframework.org/schema/p" 
+	  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+	  xmlns="http://www.springframework.org/schema/beans"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans 
+						   http://www.springframework.org/schema/beans/spring-beans.xsd 
+						   http://www.springframework.org/schema/context 
+						   http://www.springframework.org/schema/context/spring-context.xsd 
+						   http://www.springframework.org/schema/tx 
+						   http://www.springframework.org/schema/tx/spring-tx.xsd 
+						   http://www.springframework.org/schema/aop 
+						   http://www.springframework.org/schema/aop/spring-aop.xsd">
+						   
+	<context:property-placeholder system-properties-mode="FALLBACK" location="classpath:jdbc.properties"/>
+	
+	<bean destroy-method="close" class="org.apache.commons.dbcp2.BasicDataSource" id="dataSource">
+	<property value="${driverClassName}" name="driverClassName"/>
+	<property value="${url}" name="url"/>
+	<property value="${username}" name="username"/>
+	<property value="${password}" name="password"/>
+	<property value="${initialSize}" name="initialSize"/>
+	<property value="${maxIdle}" name="maxIdle"/>
+	<property value="${minIdle}" name="minIdle"/>
+	</bean>
+	
+	<!-- 事务管理器，依赖于数据源 -->
+	<bean class="org.springframework.jdbc.datasource.DataSourceTransactionManager" id="transactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+	
+	<!-- 开启事务注解 -->
+	<tx:annotation-driven transaction-manager="transactionManager"/>
+	
+	<!-- 配置mybatis工厂 -->
+	<bean class="org.mybatis.spring.SqlSessionFactoryBean" id="sqlSessionFactory">
+	
+	<!-- 注入数据源 -->
+	<property name="dataSource" ref="dataSource"/>
+	
+	<!-- 指定核心配置文件 -->
+	<property value="classpath:mybatis-config.xml" name="configLocation"/>
+	</bean>
+	
+	
+	<!-- 实例化DAO -->
+	<bean class="com.dbs.dao.EmployeeDaoImpl" id="employeeDao">
+	<property name="sqlSessionFactory" ref="sqlSessionFactory"/>
+	</bean>
+	
+
+</beans>
