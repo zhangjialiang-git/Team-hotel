@@ -5,11 +5,11 @@
 <configuration>
 
 	<typeAliases>
-	<package name="com.dbs.pojo"/>
+	<package name="com.dbs.entity"/>
 	</typeAliases>
 
 	<mappers>
-		<mapper resource="com/dbs/pojo/EmployeeMapper.xml"/>
+		<mapper resource="com/dbs/mapper/EmployeeMapper.xml"/>
 	</mappers>
 	
 </configuration>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.dbs.mapper.EmployeeMapper">
+
+	<select resultType="EmpInfo" parameterType="EmpInfo" id="checkLoginEmployee">
+		select a.e_id, a.name, a.username, a.password, a.age, b.j_name from t_empinfo a,t_empjob b 
+		where a.j_id=b.j_id and a.username=#{username} and a.password=#{password} and b.j_id = #{j_id}
+	</select>
+	
+	
+	<insert parameterType="EmpInfo" id="insertEmployee">
+		insert into t_empinfo(username,password,name,age,j_id,hiredate) 
+		values (#{username},#{password},#{name},#{age},#{j_id},sysdate()) 
+	</insert>
+	
+	<update parameterType="EmpInfo" id="updateEmployee">
+		update t_empinfo set name=#{name},age=#{age} 
+		where e_id = #{e_id} 
+	</update>
+	
+	<delete parameterType="EmpInfo" id="deleteEmployee">
+		delete from t_empinfo where e_id = #{e_id}
+	</delete>
+	
+	<select resultType="EmpInfo" id="checkEmployee">
+		select a.e_id,a.name,a.age,b.j_name,a.hiredate  from t_empinfo a,t_empjob b where a.j_id=b.j_id ;
+	</select>
+	
+</mapper>
