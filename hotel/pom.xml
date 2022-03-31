@@ -14,7 +14,7 @@
   	<java.version>1.10</java.version>
   	<maven.compiler.source>1.10</maven.compiler.source>
   	<maven.compiler.target>1.10</maven.compiler.target>
-  	<org.springframework.version>5.0.0.RELEASE</org.springframework.version>
+  	<org.springframework.version>5.3.18</org.springframework.version>
   </properties>
  
   <dependencies>
